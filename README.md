@@ -23,4 +23,6 @@ src/
     home/                # Homepage composition and feature-specific sections
 ```
 
+Styling uses Tailwind CSS v4 utilities, with shared theme tokens in `src/app/globals.css`.
+
 The homepage is a visual foundation. Ride search and passenger-request submission are not connected to a WayPadi API yet.

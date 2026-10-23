@@ -38,30 +38,144 @@ export function RideSearch() {
   }
 
   return (
-    <section className="search-section" id="find" aria-labelledby="search-title">
-      <div className="search-heading">
-        <div><div className="section-kicker">Your next journey</div><h2 id="search-title">Where are you headed?</h2></div>
-        <div className="trip-switch" role="tablist" aria-label="Choose a trip type">
-          <button className={`trip-tab${mode === 'rides' ? ' active' : ''}`} type="button" role="tab" aria-selected={mode === 'rides'} onClick={() => { setMode('rides'); setNotice(''); }}>Find a ride</button>
-          <button className={`trip-tab${mode === 'request' ? ' active' : ''}`} type="button" role="tab" aria-selected={mode === 'request'} onClick={() => { setMode('request'); setNotice(''); }}>Request a ride</button>
+    <section
+      className="relative z-[4] mx-auto mb-[34px] max-w-[1210px] rounded-[20px] border border-[#efe5d7] bg-paper px-[34px] pb-[17px] pt-[29px] shadow-[0_18px_50px_rgba(72,48,20,0.09)] max-[1100px]:mx-[5%] max-[760px]:mx-[14px] max-[760px]:rounded-[17px] max-[760px]:px-[17px] max-[760px]:pb-[15px] max-[760px]:pt-[23px]"
+      id="find"
+      aria-labelledby="search-title"
+    >
+      <div className="mb-5 flex items-center justify-between max-[760px]:mb-[15px] max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-[15px]">
+        <div>
+          <div className="mb-[6px] text-[9px] font-bold uppercase tracking-[1.6px] text-[#a66a24]">Your next journey</div>
+          <h2 id="search-title" className="m-0 font-display text-[23px] font-bold leading-[1.2] tracking-[-0.8px] max-[760px]:text-[21px]">
+            Where are you headed?
+          </h2>
+        </div>
+        <div className="flex gap-1 rounded-xl border border-[#f1e9dc] bg-[#fbf7ef] p-1 max-[760px]:w-full" role="tablist" aria-label="Choose a trip type">
+          <button
+            className={`flex-1 cursor-pointer rounded-lg border-0 px-[14px] py-[9px] text-[10px] font-bold max-[760px]:py-[10px] ${mode === 'rides' ? 'bg-[#f9bd3f] text-[#392616] shadow-[0_2px_5px_rgba(99,61,12,0.1)]' : 'bg-transparent text-[#807364]'}`}
+            type="button"
+            role="tab"
+            aria-selected={mode === 'rides'}
+            onClick={() => { setMode('rides'); setNotice(''); }}
+          >
+            Find a ride
+          </button>
+          <button
+            className={`flex-1 cursor-pointer rounded-lg border-0 px-[14px] py-[9px] text-[10px] font-bold max-[760px]:py-[10px] ${mode === 'request' ? 'bg-[#f9bd3f] text-[#392616] shadow-[0_2px_5px_rgba(99,61,12,0.1)]' : 'bg-transparent text-[#807364]'}`}
+            type="button"
+            role="tab"
+            aria-selected={mode === 'request'}
+            onClick={() => { setMode('request'); setNotice(''); }}
+          >
+            Request a ride
+          </button>
         </div>
       </div>
-      <form className="search-form" onSubmit={handleSubmit}>
-        <label className="field origin-field">
-          <span className="field-icon origin-icon" aria-hidden="true" />
-          <span className="field-body"><span className="field-label">Leaving from</span><input required name="origin" placeholder="Enter a pickup area" autoComplete="off" value={origin} onChange={(event) => setOrigin(event.target.value)} /></span>
+
+      <form
+        className="relative grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,0.8fr)_auto] items-stretch gap-[9px] max-[1100px]:grid-cols-[minmax(0,1fr)_28px_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] max-[760px]:flex max-[760px]:flex-col"
+        onSubmit={handleSubmit}
+      >
+        <label className="flex min-h-[66px] min-w-0 items-center gap-[11px] rounded-xl border border-[#ece3d7] bg-[#fffefa] px-3 transition-[border-color,box-shadow] focus-within:border-[#e6a12b] focus-within:shadow-[0_0_0_3px_rgba(230,161,43,0.12)] max-[760px]:min-h-[61px] max-[1100px]:[grid-column:1]">
+          <svg className="h-[15px] w-[15px] flex-none text-[#a76020]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 14s5-4.6 5-8A5 5 0 0 0 3 6c0 3.4 5 8 5 8Z" stroke="currentColor" strokeWidth="1.7" />
+            <circle cx="8" cy="6" r="1.5" fill="currentColor" />
+          </svg>
+          <span className="block w-full min-w-0">
+            <span className="mb-1 block text-[9px] text-[#958777]">Leaving from</span>
+            <input
+              className="block w-full min-w-0 border-0 bg-transparent p-0 text-[11px] font-semibold text-[#3b2a1c] outline-none placeholder:font-normal placeholder:text-[#a3988a]"
+              required
+              name="origin"
+              placeholder="Enter a pickup area"
+              autoComplete="off"
+              value={origin}
+              onChange={(event) => setOrigin(event.target.value)}
+            />
+          </span>
         </label>
-        <button className="swap-button" type="button" aria-label="Swap origin and destination" onClick={() => { setOrigin(destination); setDestination(origin); }}>↕</button>
-        <label className="field destination-field">
-          <span className="field-icon destination-icon" aria-hidden="true" />
-          <span className="field-body"><span className="field-label">Going to</span><input required name="destination" placeholder="Enter a destination" autoComplete="off" value={destination} onChange={(event) => setDestination(event.target.value)} /></span>
+
+        <button
+          className="h-[31px] w-[31px] cursor-pointer self-center rounded-full border border-[#eee4d6] bg-[#fffefa] text-[17px] text-[#a76c25] max-[1100px]:[grid-column:2] max-[1100px]:[grid-row:1] max-[760px]:absolute max-[760px]:right-[30px] max-[760px]:z-[2] max-[760px]:mt-[53px] max-[760px]:h-[29px] max-[760px]:w-[29px] max-[760px]:rotate-90"
+          type="button"
+          aria-label="Swap origin and destination"
+          onClick={() => { setOrigin(destination); setDestination(origin); }}
+        >
+          ↕
+        </button>
+
+        <label className="flex min-h-[66px] min-w-0 items-center gap-[11px] rounded-xl border border-[#ece3d7] bg-[#fffefa] px-3 transition-[border-color,box-shadow] focus-within:border-[#e6a12b] focus-within:shadow-[0_0_0_3px_rgba(230,161,43,0.12)] max-[760px]:mt-1 max-[760px]:min-h-[61px] max-[1100px]:[grid-column:3]">
+          <svg className="h-[15px] w-[15px] flex-none text-[#df9b27]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 14s5-4.6 5-8A5 5 0 0 0 3 6c0 3.4 5 8 5 8Z" stroke="currentColor" strokeWidth="1.7" />
+            <circle cx="8" cy="6" r="1.5" fill="currentColor" />
+          </svg>
+          <span className="block w-full min-w-0">
+            <span className="mb-1 block text-[9px] text-[#958777]">Going to</span>
+            <input
+              className="block w-full min-w-0 border-0 bg-transparent p-0 text-[11px] font-semibold text-[#3b2a1c] outline-none placeholder:font-normal placeholder:text-[#a3988a]"
+              required
+              name="destination"
+              placeholder="Enter a destination"
+              autoComplete="off"
+              value={destination}
+              onChange={(event) => setDestination(event.target.value)}
+            />
+          </span>
         </label>
-        <label className="field date-field"><span className="field-icon calendar-icon" aria-hidden="true">▦</span><span className="field-body"><span className="field-label">Travel date</span><input required name="date" type="date" min={minimumDate} /></span></label>
-        <label className="field passenger-field"><span className="field-icon people-icon" aria-hidden="true">♙</span><span className="field-body"><span className="field-label">Passengers</span><select name="passengers" aria-label="Number of passengers"><option>1 passenger</option><option>2 passengers</option><option>3 passengers</option><option>4 passengers</option></select></span></label>
-        <Button className="search-button" type="submit">{mode === 'rides' ? 'Search rides' : 'Post a request'} <span aria-hidden="true">→</span></Button>
+
+        <label className="flex min-h-[66px] min-w-0 items-center gap-[11px] rounded-xl border border-[#ece3d7] bg-[#fffefa] px-3 transition-[border-color,box-shadow] focus-within:border-[#e6a12b] focus-within:shadow-[0_0_0_3px_rgba(230,161,43,0.12)] max-[760px]:min-h-[61px] max-[1100px]:[grid-column:4]">
+          <span className="w-[15px] flex-none text-center text-base leading-[15px] text-[#97621f]" aria-hidden="true">▦</span>
+          <span className="block w-full min-w-0">
+            <span className="mb-1 block text-[9px] text-[#958777]">Travel date</span>
+            <input
+              className="block w-full min-w-0 border-0 bg-transparent p-0 text-[11px] font-semibold text-[#3b2a1c] outline-none [color-scheme:light] [font-family:inherit]"
+              required
+              name="date"
+              type="date"
+              min={minimumDate}
+            />
+          </span>
+        </label>
+
+        <label className="flex min-h-[66px] min-w-0 items-center gap-[11px] rounded-xl border border-[#ece3d7] bg-[#fffefa] px-3 transition-[border-color,box-shadow] focus-within:border-[#e6a12b] focus-within:shadow-[0_0_0_3px_rgba(230,161,43,0.12)] max-[760px]:min-h-[61px] max-[1100px]:[grid-column:5]">
+          <span className="w-[15px] flex-none text-center text-base leading-[15px] text-[#97621f]" aria-hidden="true">♙</span>
+          <span className="block w-full min-w-0">
+            <span className="mb-1 block text-[9px] text-[#958777]">Passengers</span>
+            <select
+              className="block w-full min-w-0 cursor-pointer appearance-none border-0 bg-transparent p-0 text-[11px] font-semibold text-[#3b2a1c] outline-none"
+              name="passengers"
+              aria-label="Number of passengers"
+            >
+              <option>1 passenger</option>
+              <option>2 passengers</option>
+              <option>3 passengers</option>
+              <option>4 passengers</option>
+            </select>
+          </span>
+        </label>
+
+        <Button
+          className="min-h-[66px] self-stretch gap-[10px] whitespace-nowrap rounded-xl px-[19px] text-[11px] max-[1100px]:col-span-full max-[1100px]:min-h-12 max-[760px]:mt-0.5 max-[760px]:w-full max-[760px]:min-h-[50px]"
+          type="submit"
+        >
+          {mode === 'rides' ? 'Search rides' : 'Post a request'} <span aria-hidden="true">→</span>
+        </Button>
       </form>
-      <p className="form-message" role="status" aria-live="polite">{notice}</p>
-      <div className="quick-routes"><span>Popular:</span>{popularRoutes.map((route) => <a key={route.label} href="#find" onClick={(event) => { event.preventDefault(); chooseRoute(route.origin, route.destination); }}>{route.label}</a>)}</div>
+
+      <p className="mb-0 mt-[7px] min-h-[15px] px-[2px] text-[10px] text-green" role="status" aria-live="polite">{notice}</p>
+      <div className="flex items-center gap-[15px] text-[9px] text-[#9b8c7b] max-[760px]:flex-wrap max-[760px]:gap-x-3 max-[760px]:gap-y-[10px] max-[760px]:leading-[1.6]">
+        <span className="font-semibold max-[760px]:w-full">Popular:</span>
+        {popularRoutes.map((route) => (
+          <a
+            className="text-[#6f5740] underline decoration-[#d9c1a0] underline-offset-[3px]"
+            key={route.label}
+            href="#find"
+            onClick={(event) => { event.preventDefault(); chooseRoute(route.origin, route.destination); }}
+          >
+            {route.label}
+          </a>
+        ))}
+      </div>
     </section>
   );
 }
