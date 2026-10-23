@@ -9,7 +9,7 @@ export function OfferBanner() {
         <h2 className="mb-[7px] font-display text-xl font-bold leading-[1.2] tracking-[-0.8px] max-[760px]:text-[17px]">There might be a seat to share.</h2>
         <p className="m-0 text-[11px] text-[#817361] max-[760px]:text-[10px] max-[760px]:leading-[1.55]">Post your route and meet people heading in the same direction.</p>
       </div>
-      <ButtonLink className="max-[760px]:col-span-full max-[760px]:mt-[6px] max-[760px]:min-h-[45px] max-[760px]:w-full" href="#offer" variant="dark">
+      <ButtonLink className="max-[760px]:col-span-full max-[760px]:mt-[6px] max-[760px]:min-h-[45px] max-[760px]:w-full" href="/rides/new" variant="dark">
         Offer a seat <span aria-hidden="true">→</span>
       </ButtonLink>
       <div className="absolute -right-[54px] -top-[121px] -z-10 h-80 w-80 rounded-full bg-[rgba(235,186,92,0.15)]" aria-hidden="true" />

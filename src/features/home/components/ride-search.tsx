@@ -1,19 +1,15 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
-
-const popularRoutes = [
-  { label: 'Lekki → Victoria Island', origin: 'Lekki Phase 1', destination: 'Victoria Island' },
-  { label: 'Yaba → Lekki', origin: 'Yaba', destination: 'Lekki Phase 1' },
-  { label: 'Ikeja → VI', origin: 'Ikeja', destination: 'Victoria Island' },
-];
+import { POPULAR_ROUTES } from '@/lib/domain';
 
 export function RideSearch() {
+  const router = useRouter();
   const [mode, setMode] = useState<'rides' | 'request'>('rides');
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
-  const [notice, setNotice] = useState('');
   const [minimumDate, setMinimumDate] = useState('');
 
   useEffect(() => {
@@ -25,15 +21,29 @@ export function RideSearch() {
     event.preventDefault();
     const form = event.currentTarget;
     if (!form.reportValidity()) return;
-    setNotice(mode === 'rides'
-      ? 'Your search is ready. Connect this form to the WayPadi ride service to see live matches.'
-      : 'Your request details are ready. Connect this form to WayPadi to publish your journey.');
+
+    const formData = new FormData(form);
+    const params = new URLSearchParams();
+    if (origin.trim()) params.set('origin', origin.trim());
+    if (destination.trim()) params.set('destination', destination.trim());
+
+    const date = formData.get('date');
+    if (typeof date === 'string' && date) params.set('date', date);
+
+    if (mode === 'request') {
+      const passengers = String(formData.get('passengers') ?? '1');
+      const seats = passengers.match(/\d+/)?.[0];
+      if (seats) params.set('seats', seats);
+      router.push(`/requests/new?${params.toString()}`);
+      return;
+    }
+
+    router.push(`/rides?${params.toString()}`);
   }
 
   function chooseRoute(routeOrigin: string, routeDestination: string) {
     setOrigin(routeOrigin);
     setDestination(routeDestination);
-    setNotice('');
     document.querySelector('#find')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
@@ -56,7 +66,7 @@ export function RideSearch() {
             type="button"
             role="tab"
             aria-selected={mode === 'rides'}
-            onClick={() => { setMode('rides'); setNotice(''); }}
+            onClick={() => { setMode('rides'); }}
           >
             Find a ride
           </button>
@@ -65,7 +75,7 @@ export function RideSearch() {
             type="button"
             role="tab"
             aria-selected={mode === 'request'}
-            onClick={() => { setMode('request'); setNotice(''); }}
+            onClick={() => { setMode('request'); }}
           >
             Request a ride
           </button>
@@ -146,10 +156,10 @@ export function RideSearch() {
               name="passengers"
               aria-label="Number of passengers"
             >
-              <option>1 passenger</option>
-              <option>2 passengers</option>
-              <option>3 passengers</option>
-              <option>4 passengers</option>
+              <option value="1">1 passenger</option>
+              <option value="2">2 passengers</option>
+              <option value="3">3 passengers</option>
+              <option value="4">4 passengers</option>
             </select>
           </span>
         </label>
@@ -162,10 +172,9 @@ export function RideSearch() {
         </Button>
       </form>
 
-      <p className="mb-0 mt-[7px] min-h-[15px] px-[2px] text-[10px] text-green" role="status" aria-live="polite">{notice}</p>
       <div className="flex items-center gap-[15px] text-[9px] text-[#9b8c7b] max-[760px]:flex-wrap max-[760px]:gap-x-3 max-[760px]:gap-y-[10px] max-[760px]:leading-[1.6]">
         <span className="font-semibold max-[760px]:w-full">Popular:</span>
-        {popularRoutes.map((route) => (
+        {POPULAR_ROUTES.map((route) => (
           <a
             className="text-[#6f5740] underline decoration-[#d9c1a0] underline-offset-[3px]"
             key={route.label}

@@ -69,7 +69,7 @@ export function HeroSection() {
         </p>
         <div className="flex items-center gap-[25px] max-[760px]:gap-[19px]">
           <ButtonLink href="#find">Find a ride <span aria-hidden="true">→</span></ButtonLink>
-          <a className="text-xs font-bold text-[#60442a]" href="#offer">
+          <a className="text-xs font-bold text-[#60442a]" href="/rides/new">
             I have a seat <span className="ml-[6px] text-orange" aria-hidden="true">↗</span>
           </a>
         </div>
