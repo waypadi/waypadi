@@ -16,9 +16,11 @@ export const endpoints = {
     register: '/auth/register',
     logout: '/auth/logout',
     me: '/auth/me',
+    forgotPassword: '/auth/forgot-password',
+    resetPassword: '/auth/reset-password',
   },
   user: {
-    profile: '/user/profile',
+    profile: '/users/me',
     vehicle: '/user/vehicle',
   },
 } as const;
